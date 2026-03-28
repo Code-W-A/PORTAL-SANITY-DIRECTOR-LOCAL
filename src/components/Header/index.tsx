@@ -1,5 +1,4 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,9 +7,7 @@ import menuData from "./menuData";
 
 const Header = () => {
   const [navigationOpen, setNavigationOpen] = useState(false);
-  const [acDropdownToggler, setAcDropdownToggler] = useState(false);
   const [stickyMenu, setStickyMenu] = useState(false);
-  const { data: session, status } = useSession();
   const pathUrl = usePathname();
 
   useEffect(() => {
@@ -43,7 +40,6 @@ const Header = () => {
 
   useEffect(() => {
     setNavigationOpen(false);
-    setAcDropdownToggler(false);
   }, [pathUrl]);
 
   return (
@@ -138,48 +134,12 @@ const Header = () => {
           </nav>
 
           <div className="mt-7 flex flex-col gap-4 lg:mt-0 lg:flex-row lg:items-center">
-            {status !== "loading" && (
-              <div className="group relative">
-                {session ? (
-                  <>
-                    <button
-                      onClick={() => setAcDropdownToggler(!acDropdownToggler)}
-                      className="rounded-md border border-dark px-5.5 py-2.5 font-medium text-dark transition-colors duration-200 hover:bg-dark hover:text-white"
-                    >
-                      Cont
-                    </button>
-                    <ul className={`dropdown ${acDropdownToggler ? "flex" : "hover:flex"}`}>
-                      <li>
-                        <Link
-                          href="/account"
-                          className={`hover:bg-gray hover:text-primary flex rounded-md px-4 py-2 text-sm ${
-                            pathUrl === "/account" ? "bg-gray text-primary" : ""
-                          }`}
-                        >
-                          Detalii cont
-                        </Link>
-                      </li>
-                      <li>
-                        <button
-                          aria-label="logout button"
-                          onClick={() => signOut()}
-                          className="hover:bg-gray hover:text-primary flex w-full cursor-pointer rounded-md px-4 py-2 text-sm"
-                        >
-                          Iesire
-                        </button>
-                      </li>
-                    </ul>
-                  </>
-                ) : (
-                  <Link
-                    href="/auth/signin"
-                    className="rounded-md border border-dark px-5.5 py-2.5 font-medium text-dark transition-colors duration-200 hover:bg-dark hover:text-white"
-                  >
-                    Autentificare
-                  </Link>
-                )}
-              </div>
-            )}
+            <Link
+              href="/contact"
+              className="rounded-md border border-dark px-5.5 py-2.5 font-medium text-dark transition-colors duration-200 hover:bg-dark hover:text-white"
+            >
+              Contact
+            </Link>
           </div>
         </div>
       </div>
